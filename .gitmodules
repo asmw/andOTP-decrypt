@@ -1,0 +1,3 @@
+[submodule "aes_gcm"]
+	path = aes_gcm
+	url = https://github.com/asmw/AES-GCM-Python.git
