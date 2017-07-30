@@ -1,6 +1,6 @@
 # andOTP-decrypt
 
-A decryption tool for password-secured backups of the [andOTP]((https://github.com/flocke/andOTP) two-factor android app.
+A decryption tool for password-secured backups of the [andOTP](https://github.com/flocke/andOTP) two-factor android app.
 
 ## Requirements:
  - Python and pycrypto
