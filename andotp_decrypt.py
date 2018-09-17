@@ -10,7 +10,7 @@ Options:
 
 """
 
-from aes_gcm.aes_gcm import AES_GCM, InvalidTagException
+from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from os.path import basename
 from getpass import getpass
@@ -44,10 +44,14 @@ def decrypt_aes(input_file):
         print("IV: %s" % bytes2Hex(iv))
         print("Crypttext: %s" % bytes2Hex(crypttext))
         print("Auth tag: %s" % bytes2Hex(tag))
-
-    aes = AES_GCM(symmetric_key)
     try:
-        dec = aes.decrypt(iv, crypttext, tag)
+        aes = AES.new(symmetric_key, AES.MODE_GCM, nonce=iv)
+    except AttributeError as e:
+        print(e)
+        print('Using \'pycryptodome\' instead of \'pycrypto\' should solve this issue.')
+        sys.exit(1)
+    try:
+        dec = aes.decrypt_and_verify(crypttext, tag)
         if debug:
             print("Decrypted data: %s" % bytes2Hex(dec))
         return dec.decode('UTF-8')

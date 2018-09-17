@@ -8,11 +8,11 @@ Tools:
  - `generate_code.py`: A tool to generate a TOTP token for an account in the backup
 
 ## Requirements:
- - `andotp_decrypt.py`: Python 3 and pycrypto
+ - `andotp_decrypt.py`: Python 3 and pycryptodome
  - `generate_qr_codes.py` + `generate_code.py`: pyqrcode and pyotp
 
 On debian/ubuntu this should work:
- - `sudo apt-get install python3-crypto python3-pyotp python3-qrcode`
+ - `sudo apt-get install python3-cryptodome python3-pyotp python3-qrcode`
 
 ## Usage:
  - Dump JSON to the console:
