@@ -12,7 +12,10 @@ Tools:
  - `generate_qr_codes.py` + `generate_code.py`: pyqrcode and pyotp
 
 On debian/ubuntu this should work:
- - `sudo apt-get install python3-crypto python3-pyotp python3-qrcode`
+ - `sudo apt-get install python3-crypto python3-pyotp python3-qrcode python3-docopt`
+
+## Setup:
+ - To use `andotp_decrypt.py` you must clone this repository with `--recursive` (eg. `git clone --recursive https://github.com/asmw/andOTP-decrypt`)
 
 ## Usage:
  - Dump JSON to the console:
