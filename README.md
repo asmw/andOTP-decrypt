@@ -10,6 +10,9 @@ Tools:
 ## Requirements:
  - `andotp_decrypt.py`: Python 3 and pycrypto
  - `generate_qr_codes.py` + `generate_code.py`: pyqrcode and pyotp
+ 
+Pip install (recommended)
+ - `sudo pip3 install -r requirements.txt` 
 
 On debian/ubuntu this should work:
  - `sudo apt-get install python3-crypto python3-pyotp python3-qrcode`
