@@ -27,7 +27,12 @@ def decrypt_aes(input_file):
     if not os.path.exists(input_file):
         print("Could not find input file: %s" % input_file)
         return None
-    pw = getpass('andOTP AES passphrase:')
+    # Read the backup password manually via a prompt if stdin is a tty,
+    # otherwise read from stdin directly.
+    if sys.stdin.isatty():
+        pw = getpass('andOTP AES passphrase:')
+    else:
+        pw = sys.stdin.readline()
     hash = SHA256.new(pw.strip().encode('UTF-8'))
     symmetric_key = hash.digest()
     if debug:
