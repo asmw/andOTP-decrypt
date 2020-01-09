@@ -46,9 +46,9 @@ def main():
             url = totp.provisioning_uri(label, issuer_name = issuer)
         if url:
             img = pyqrcode.create(url)
-            safe_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".svg"
-            img.svg(safe_filename, scale=4, background='#fff')
-            print("Code saved as: %s" % safe_filename)
+            save_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".svg"
+            img.svg(save_filename, scale=4, background='#fff')
+            print("Code saved as: %s" % save_filename)
 
 if __name__ == '__main__':
     main()
