@@ -2,11 +2,12 @@
 """andotp-decrypt.py
 
 Usage:
-  andotp-decrypt.py INPUT_FILE
+andotp-decrypt.py [--debug] [-h|--help] [--version] INPUT_FILE
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
+--debug       Print debug info
+-h --help     Show this screen.
+--version     Show version.
 
 """
 
@@ -20,12 +21,10 @@ from Crypto.Hash import SHA256
 
 from docopt import docopt
 
-debug = False
-
 def bytes2Hex(bytes2encode):
     return '(%s) 0x%s' % (len(bytes2encode), ''.join('{:02x}'.format(x) for x in bytes2encode))
 
-def decrypt_aes(input_file):
+def decrypt_aes(input_file, debug):
     if not os.path.exists(input_file):
         print("Could not find input file: %s" % input_file)
         return None
@@ -65,8 +64,8 @@ def decrypt_aes(input_file):
         return None
 
 def main():
-    arguments = docopt(__doc__, version='andotp-decrypt 0.1')
-    print(decrypt_aes(arguments['INPUT_FILE']))
+    arguments = docopt(__doc__, version='andotp-decrypt 0.1.0')
+    print(decrypt_aes(arguments['INPUT_FILE'], arguments['--debug']))
     
 if __name__ == '__main__':
     main()
