@@ -8,15 +8,12 @@ Tools:
   - Images are saved to the current working directory
 - `generate_code.py`: A tool to generate a TOTP token for an account in the backup
 
-## Requirements
+## Setup
 
-- `andotp_decrypt.py`: Python 3 and pycryptodome
-- `generate_qr_codes.py` + `generate_code.py`: pyqrcode and pyotp
-
-Poetry install (recommended)
+[Poetry](https://python-poetry.org/) install (recommended)
 
 - Install poetry
-  - `pip install poetry`
+  - `pip install poetry` (or use the recommended way from the website)
 - Install everything else
   - `poetry install`
 - Launch the virtualenv
@@ -28,7 +25,7 @@ Pip install
 
 On debian/ubuntu this should work:
 
-- `sudo apt-get install python3-cryptodome python3-pyotp python3-qrcode`
+- `sudo apt-get install python3-pycryptodome python3-pyotp python3-pyqrcode python3-pillow python3-docopt`
 
 ## Usage
 
