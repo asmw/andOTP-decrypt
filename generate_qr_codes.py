@@ -13,7 +13,7 @@ Options:
 from docopt import docopt
 import sys
 import pyotp
-import qrcode
+import pyqrcode
 import fileinput
 import json
 import andotp_decrypt
@@ -45,9 +45,9 @@ def main():
             totp = pyotp.TOTP(entry['secret'])
             url = totp.provisioning_uri(label, issuer_name = issuer)
         if url:
-            img = qrcode.make(url)
-            safe_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".png"
-            img.save(safe_filename)
+            img = pyqrcode.create(url)
+            safe_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".svg"
+            img.svg(safe_filename, scale=4, background='#fff')
             print("Code saved as: %s" % safe_filename)
 
 if __name__ == '__main__':
