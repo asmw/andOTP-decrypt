@@ -24,7 +24,7 @@ from docopt import docopt
 def bytes2Hex(bytes2encode):
     return '(%s) 0x%s' % (len(bytes2encode), ''.join('{:02x}'.format(x) for x in bytes2encode))
 
-def decrypt_aes(input_file, debug):
+def decrypt_aes(input_file, debug=False):
     if not os.path.exists(input_file):
         print("Could not find input file: %s" % input_file)
         return None
