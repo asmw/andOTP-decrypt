@@ -11,6 +11,7 @@ Options:
 """
 
 import os
+import sys
 from os.path import basename
 from getpass import getpass
 
@@ -63,7 +64,9 @@ def decrypt_aes(input_file):
         print("The passphrase was probably wrong")
         return None
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='andotp-decrypt 0.1')
-
     print(decrypt_aes(arguments['INPUT_FILE']))
+    
+if __name__ == '__main__':
+    main()
