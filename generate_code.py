@@ -17,7 +17,7 @@ import fileinput
 import json
 import andotp_decrypt
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='generate_code 0.1')
 
     text = andotp_decrypt.decrypt_aes(arguments['ANDOTP_AES_BACKUP_FILE'])
@@ -44,3 +44,6 @@ if __name__ == '__main__':
             sys.exit(2)
     if not found:
         print("No entry matching '%s' found" % arguments["MATCH_STRING"])
+
+if __name__ == '__main__':
+    main()

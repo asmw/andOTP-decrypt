@@ -17,7 +17,7 @@ import fileinput
 import json
 import andotp_decrypt
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='generate_qr_codes 0.1')
 
     text = andotp_decrypt.decrypt_aes(arguments['ANDOTP_AES_BACKUP_FILE'])
@@ -42,3 +42,6 @@ if __name__ == '__main__':
             safe_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".png"
             img.save(safe_filename)
             print("Code saved as: %s" % safe_filename)
+
+if __name__ == '__main__':
+    main()
