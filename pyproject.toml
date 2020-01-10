@@ -1,9 +1,16 @@
 [tool.poetry]
 name = "andotp-decrypt"
-version = "0.1.0"
+version = "0.1.1"
 description = "A backup decryptor for the andOTP Android app"
 authors = ["asmw <asmw@asmw.org>"]
+readme = "README.md"
+homepage = "https://github.com/asmw/andOTP-decrypt"
 license = "MIT"
+packages = [
+    { include = "andotp_decrypt.py" },
+    { include = "generate_code.py" },
+    { include = "generate_qr_codes.py" },
+]
 
 [tool.poetry.scripts]
 andotp_decrypt = 'andotp_decrypt:main'

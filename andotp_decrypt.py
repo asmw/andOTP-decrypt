@@ -88,7 +88,7 @@ def get_password():
     return pw.strip().encode('UTF-8')
 
 def main():
-    arguments = docopt(__doc__, version='andotp-decrypt 0.1.0')
+    arguments = docopt(__doc__, version='andotp-decrypt 0.1')
     input_file = arguments['INPUT_FILE']
     debug = arguments['--debug']
     old_encryption = arguments['--old']
