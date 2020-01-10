@@ -1,5 +1,9 @@
 # andOTP-decrypt
 
+A backup decryptor for the [andOTP](https://github.com/andOTP/andOTP) Android app.
+
+The tools in this package support the password based backup files of andOTP in both the current (0.6.3) old (0.6.2 and before) format.
+
 Tools:
 
 - `andotp_decrypt.py`: A decryption tool for password-secured backups of the [andOTP](https://github.com/flocke/andOTP) two-factor android app.
@@ -8,7 +12,17 @@ Tools:
   - Images are saved to the current working directory
 - `generate_code.py`: A tool to generate a TOTP token for an account in the backup
 
-## Setup
+## Installation
+
+`pip install andotp-decrypt`
+
+The tools will be installed as:
+
+- `andotp_decrypt`
+- `andotp_gencode`
+- `andotp_qrcode`
+
+## Development Setup
 
 [Poetry](https://python-poetry.org/) install (recommended)
 
