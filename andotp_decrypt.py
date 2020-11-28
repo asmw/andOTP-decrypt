@@ -55,17 +55,20 @@ def decrypt_aes_new_format(password, input_file, debug=False):
     with open(input_file, 'rb') as f:
         input_bytes = f.read()
 
-    # Raw data structure is iterations[:4] + salt[4:16] + data[16:]
-    iterations = struct.unpack(">I", input_bytes[:4])[0]
-    salt       = input_bytes[4:16]
-    data       = input_bytes[16:]
-    pbkdf2_key = hashlib.pbkdf2_hmac('sha1', password, salt, iterations, 32)
-    if debug:
-        print("Iterations: %s" % iterations)
-        print("Salt: %s" % bytes2Hex(salt))
-        print("Pbkdf2 key: %s" % bytes2Hex(pbkdf2_key))
-
-    return decode(pbkdf2_key, data, debug)
+    try:
+        # Raw data structure is iterations[:4] + salt[4:16] + data[16:]
+        iterations = struct.unpack(">I", input_bytes[:4])[0]
+        salt       = input_bytes[4:16]
+        data       = input_bytes[16:]
+        pbkdf2_key = hashlib.pbkdf2_hmac('sha1', password, salt, iterations, 32)
+        if debug:
+            print("Iterations: %s" % iterations)
+            print("Salt: %s" % bytes2Hex(salt))
+            print("Pbkdf2 key: %s" % bytes2Hex(pbkdf2_key))
+        return decode(pbkdf2_key, data, debug)
+    except struct.error:
+        print("The input file is probably empty")
+        return None
 
 def decrypt_aes(password, input_file, debug=False):
     hash = SHA256.new(password)
