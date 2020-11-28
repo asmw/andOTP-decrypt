@@ -29,7 +29,8 @@ def main():
         text = andotp_decrypt.decrypt_aes_new_format(password, arguments['ANDOTP_AES_BACKUP_FILE'])
 
     if not text:
-        print("Something went wrong while loading %s. Maybe the passphrase was wrong?" % arguments['ANDOTP_AES_BACKUP_FILE'])
+        print("Something went wrong while loading %s. Maybe the passphrase was wrong?" 
+                " or the input file is empty!" % arguments['ANDOTP_AES_BACKUP_FILE'])
         sys.exit(1)
     entries = json.loads(text)
     for entry in entries:
