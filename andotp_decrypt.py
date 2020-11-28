@@ -38,8 +38,12 @@ def decode(key, data, debug=False):
         print("IV: %s" % bytes2Hex(iv))
         print("Crypttext: %s" % bytes2Hex(crypttext))
         print("Auth tag: %s" % bytes2Hex(tag))
+    try:
+        aes = AES.new(key, AES.MODE_GCM, nonce=iv)
+    except Exception as e:
+        print(e)
+        return None
 
-    aes = AES.new(key, AES.MODE_GCM, nonce=iv)
     try:
         dec = aes.decrypt_and_verify(crypttext, tag)
         if debug:
