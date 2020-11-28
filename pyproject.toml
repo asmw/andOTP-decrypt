@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "andotp-decrypt"
-version = "0.1.3"
+version = "0.1.4"
 description = "A backup decryptor for the andOTP Android app"
 authors = ["asmw <asmw@asmw.org>"]
 readme = "README.md"
