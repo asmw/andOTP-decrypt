@@ -36,9 +36,17 @@ def main():
     for entry in entries:
         url = None
         issuer = None
+        try:
+            issuer = entry['issuer']
+        except:
+            pass
+
         label = entry['label']
-        if " - " in label:
-            issuer, label = label.split(" - ", 1)
+        if issuer == None:
+            if " - " in label:
+                issuer, label = label.split(" - ", 1)
+            else:
+                issuer = label
         if entry['type'] == 'TOTP':
             totp = pyotp.TOTP(entry['secret'], interval=entry['period'])
             url = totp.provisioning_uri(label, issuer_name = issuer)
@@ -47,7 +55,7 @@ def main():
             url = totp.provisioning_uri(label, issuer_name = issuer)
         if url:
             img = pyqrcode.create(url)
-            save_filename = "".join([c for c in label if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".svg"
+            save_filename = "".join([c for c in issuer if c.isalpha() or c.isdigit() or c in "@_-"]).strip() + ".svg"
             img.svg(save_filename, scale=4, background='#fff')
             print("Code saved as: %s" % save_filename)
 
