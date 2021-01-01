@@ -1,5 +1,5 @@
 docopt==0.6.2
-pillow==7.2.0
-pycryptodome==3.9.8
-pyotp==2.4.0
+pillow==7.2.0; python_version >= "3.5"
+pycryptodome==3.9.9; (python_version >= "2.6" and python_full_version < "3.0.0") or (python_full_version >= "3.4.0")
+pyotp==2.4.1
 pyqrcode==1.2.1
