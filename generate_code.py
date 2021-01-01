@@ -2,11 +2,12 @@
 """generate_code.py
 
 Usage:
-  generate_code.py [-o|--old] [-a] ANDOTP_AES_BACKUP_FILE MATCH_STRING
+  generate_code.py [-o|--old] [-a] [-i|--issuer] ANDOTP_AES_BACKUP_FILE MATCH_STRING
 
 Options:
   -o --old      Use old encryption (andOTP <= 0.6.2)
   -a --all      Show all matches.
+  -i --issuer   Match (and print) issuer in addition to labels.
   -h --help     Show this screen.
   --version     Show version.
 
@@ -37,11 +38,18 @@ def main():
     found = False
     for entry in entries:
         label = entry['label']
+        issuer = entry['issuer']
         if entry['type'] == 'TOTP':
-            if arguments["MATCH_STRING"].lower() in label.lower():
+            match_string = arguments["MATCH_STRING"].lower()
+            if (match_string in label.lower() or
+                match_string in issuer.lower() and arguments['--issuer']):
                 found = True
                 totp = pyotp.TOTP(entry['secret'], interval=entry['period'])
-                print("Matched: %s" % label)
+                if arguments['--issuer'] and issuer != "":
+                  output = "%s/%s" % (issuer, label)
+                else:
+                  output = "%s" % label
+                print("Matched: %s" % output)
                 print(totp.now())
                 if not arguments["--all"]:
                     # The all flag wasn't provided, i.e. we only wanted one
