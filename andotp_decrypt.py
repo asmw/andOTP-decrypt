@@ -125,6 +125,19 @@ def find_entries(data, pattern, limit=None):
     return result
 
 
+def descriptor(entry):
+    label = entry.get('label')
+    issuer = entry.get('issuer')
+    if label and issuer:
+        return f'{label}[{issuer}]'
+    elif label:
+        return label
+    elif issuer:
+        return f'[{issuer}]'
+    else:
+        return 'no label or issuer found'
+
+
 def main():
     arguments = docopt(__doc__, version='andotp-decrypt 0.1')
     input_file = arguments['INPUT_FILE']

@@ -34,24 +34,19 @@ def main():
         sys.exit(1)
     entries = json.loads(text)
 
-    found = False
-    for entry in entries:
-        label = entry['label']
+    filtered_entries = andotp_decrypt.find_entries(entries, arguments["MATCH_STRING"], None if arguments["--all"] else 1)
+    if len(filtered_entries) == 0:
+        print("No entry matching '%s' found" % arguments["MATCH_STRING"])
+        sys.exit(0)
+
+    for entry in filtered_entries:
         if entry['type'] == 'TOTP':
-            if arguments["MATCH_STRING"].lower() in label.lower():
-                found = True
-                totp = pyotp.TOTP(entry['secret'], interval=entry['period'])
-                print("Matched: %s" % label)
-                print(totp.now())
-                if not arguments["--all"]:
-                    # The all flag wasn't provided, i.e. we only wanted one
-                    # match, so we can exit.
-                    sys.exit(0)
+            totp = pyotp.TOTP(entry['secret'], interval=entry['period'])
+            print("Matched: %s" % andotp_decrypt.descriptor(entry))
+            print(totp.now())
         else:
             print("Unsupported OTP type: %s" % entry["type"])
             sys.exit(2)
-    if not found:
-        print("No entry matching '%s' found" % arguments["MATCH_STRING"])
 
 
 if __name__ == '__main__':
