@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+### Fixed
+- Issuer matching for code generation
+
 ## 0.1.5
 ### Added
 - Handle `issuer` field in JSON data (thanks to @naum and @marcopaganini)
