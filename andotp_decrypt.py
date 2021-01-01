@@ -16,7 +16,6 @@ import os
 import sys
 import hashlib
 import struct
-from os.path import basename
 from getpass import getpass
 
 from Crypto.Cipher import AES
@@ -24,8 +23,10 @@ from Crypto.Hash import SHA256
 
 from docopt import docopt
 
+
 def bytes2Hex(bytes2encode):
     return '(%s) 0x%s' % (len(bytes2encode), ''.join('{:02x}'.format(x) for x in bytes2encode))
+
 
 def decode(key, data, debug=False):
     """Decode function used for both the old and new style encryption"""
@@ -54,6 +55,7 @@ def decode(key, data, debug=False):
         print("The passphrase was probably wrong")
         return None
 
+
 def decrypt_aes_new_format(password, input_file, debug=False):
     input_bytes = None
     with open(input_file, 'rb') as f:
@@ -74,6 +76,7 @@ def decrypt_aes_new_format(password, input_file, debug=False):
         print("The input file is probably empty")
         return None
 
+
 def decrypt_aes(password, input_file, debug=False):
     hash = SHA256.new(password)
     symmetric_key = hash.digest()
@@ -85,6 +88,7 @@ def decrypt_aes(password, input_file, debug=False):
 
     return decode(symmetric_key, input_bytes, debug)
 
+
 def get_password():
     # Read the backup password manually via a prompt if stdin is a tty,
     # otherwise read from stdin directly.
@@ -93,6 +97,7 @@ def get_password():
     else:
         pw = sys.stdin.readline()
     return pw.strip().encode('UTF-8')
+
 
 def main():
     arguments = docopt(__doc__, version='andotp-decrypt 0.1')
@@ -107,6 +112,7 @@ def main():
         print(decrypt_aes(password, input_file, debug))
     else:
         print(decrypt_aes_new_format(password, input_file, debug))
-    
+
+
 if __name__ == '__main__':
     main()
