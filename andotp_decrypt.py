@@ -61,19 +61,28 @@ def decrypt_aes_new_format(password, input_file, debug=False):
     with open(input_file, 'rb') as f:
         input_bytes = f.read()
 
+    if len(input_bytes) == 0:
+        print("No data could be read. The input file is unreadable or empty")
+        return None
+
     try:
         # Raw data structure is iterations[:4] + salt[4:16] + data[16:]
         iterations = struct.unpack(">I", input_bytes[:4])[0]
-        salt       = input_bytes[4:16]
-        data       = input_bytes[16:]
-        pbkdf2_key = hashlib.pbkdf2_hmac('sha1', password, salt, iterations, 32)
+        salt = input_bytes[4:16]
+        data = input_bytes[16:]
+        try:
+            pbkdf2_key = hashlib.pbkdf2_hmac('sha1', password, salt, iterations, 32)
+        except OverflowError:
+            print("Could not parse iterations from file, "
+                  "either the file is broken or the format has changed.")
+            return None
         if debug:
             print("Iterations: %s" % iterations)
             print("Salt: %s" % bytes2Hex(salt))
             print("Pbkdf2 key: %s" % bytes2Hex(pbkdf2_key))
         return decode(pbkdf2_key, data, debug)
     except struct.error:
-        print("The input file is probably empty")
+        print("The input data could not be decrypted")
         return None
 
 
@@ -97,6 +106,23 @@ def get_password():
     else:
         pw = sys.stdin.readline()
     return pw.strip().encode('UTF-8')
+
+
+def find_entries(data, pattern, limit=None):
+    result = []
+
+    for entry in data:
+        label = entry['label']
+        # NOTE: issuer was not always part of the JSON structure
+        issuer = entry.get('issuer', '')
+        tags = "".join(entry.get('tags', []))
+        key = label + issuer + tags
+        if pattern.lower() in key.lower():
+            result.append(entry)
+            if limit and len(result) == limit:
+                break
+
+    return result
 
 
 def main():
