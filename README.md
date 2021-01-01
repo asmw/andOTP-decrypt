@@ -54,10 +54,12 @@ On debian/ubuntu this should work:
 
 Thank you for contributing!
 
-- alkuzad
-- ant9000
-- anthonycicc
-- erik-h
-- romed
-- rubenvdham
-- wornt
+- @alkuzad
+- @ant9000
+- @anthonycicc
+- @erik-h
+- @romed
+- @rubenvdham
+- @wornt
+- @naums
+- @marcopaganini
