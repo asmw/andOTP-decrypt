@@ -2,10 +2,11 @@
 """generate_qr_codes.py
 
 Usage:
-  generate_qr_codes.py [-o|--old] ANDOTP_AES_BACKUP_FILE
+  generate_qr_codes.py [-o|--old] [-p|--plain] ANDOTP_AES_BACKUP_FILE
 
 Options:
   -o --old      Use old encryption (andOTP <= 0.6.2)
+  -p --plain    Load plain json file without encryption
   -h --help     Show this screen.
   --version     Show version.
 
@@ -48,10 +49,16 @@ def gen_filename(entry):
 def main():
     arguments = docopt(__doc__, version='generate_qr_codes 0.1')
 
-    password = andotp_decrypt.get_password()
+    if not arguments['--plain']:
+        password = andotp_decrypt.get_password()
+
     text = None
+
     if arguments['--old']:
         text = andotp_decrypt.decrypt_aes(password, arguments['ANDOTP_AES_BACKUP_FILE'])
+    elif arguments['--plain']:
+        with open(arguments['ANDOTP_AES_BACKUP_FILE']) as plain_file:
+            text = plain_file.read()
     else:
         text = andotp_decrypt.decrypt_aes_new_format(password, arguments['ANDOTP_AES_BACKUP_FILE'])
 
