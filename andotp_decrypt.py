@@ -18,7 +18,7 @@ import hashlib
 import struct
 from getpass import getpass
 
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 from Crypto.Hash import SHA256
 
 from docopt import docopt
